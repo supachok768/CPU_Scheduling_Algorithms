@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+    <style>
+        body {
+            background-color: #1D202D;
+            color: #FFFFFF;
+        }
+
+        .wrap {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: 0;
+        }
+
+        .sidebar {
+            background-color: rgba(13, 17, 30, 0.5);
+            /* display: flex; */
+            /* flex-direction: column; */
+            overflow-y: auto;
+        }
+
+        .contain {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 10px 20px;
+        }
+
+        .card {
+            background-color: #2F3247;
+            padding: 5px 10px;
+        }
+
+        #processTable tbody input {
+            background: #7D7E84;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 5px 10px;
+        }
+
+        #processTable tbody input[type="color"] {
+            padding: 0;
+        }
+
+        .gantt {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        .gantt li {
+            /* border-left: #fff solid 1px; */
+            text-align: center;
+            padding: 0px 5px;
+        }
+
+        .gantt li:first-child {
+            border-left: none;
+        }
+
+
+        .tableDetail tr td,
+        .tableDetail tr th {
+            padding: 3px 5px;
+        }
+
+        .tableDetail tr th {
+            background-color: #495B94;
+        }
+
+        .tableDetail {
+            background-color: #4B4D5D;
+        }
+
+        @media(min-width: 768px) {
+            .wrap {
+                flex-direction: row;
+                position: fixed;
+                top: 54px;
+                bottom: 0px;
+            }
+        }
+
+        ;
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark" style="background-color: #313440;">
+        <form class="form-inline">
+            <select name="" id="algoSelect" class="form-control"
+                style="background-color: #5F7ED4; color: #fff;border: none; outline: none;border-radius: 0px;">
+                <option value="1">All Algorithm</option>
+                <option value="2">FCFS</option>
+                <option value="3">Non-preemptive SJF</option>
+                <option value="4">Preemptive SJF</option>
+                <!-- <option value="5">RoundRobin</option> -->
+            </select>
+            <input type="number" name="" id="" class="form-control" placeholder="quantum time" style="margin-left: 10px;border: none; outline: none;border-radius: 0px;display: none;">
+        </form>
+        <button id="startBtn" style="background-color: #5F7ED4; color: #fff;border: none; outline: none;border-radius: 0px;">Start</button>
+    </nav>
+
+    <div class="wrap col-12">
+        <div class="sidebar col-xs-12 col-sm-12 col-md-5 col-lg-3">
+            <div class="row">
+                <input id="addBtn" type="button" value="Add" style="display: block;background-color: #5F7ED4; color: #fff;border: none; outline: none;border-radius: 0px;">
+            </div>
+            <div class="row">
+                <table id="processTable" class="col-12">
+                    <thead>
+                        <tr>
+                            <th scope="col">Process</th>
+                            <th scope="col">Arrival</th>
+                            <th scope="col">Burst</th>
+                            <th scope="col">Priority</th>
+                            <th scope="col">Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="col-11" data-input="process" type="text" value="P1"></td>
+                            <td><input class="col-11" data-input="arrival" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="burst" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="priority" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="color" type="color"></td>
+                        </tr>
+                        <tr>
+                            <td><input class="col-11" data-input="process" type="text" value="P2"></td>
+                            <td><input class="col-11" data-input="arrival" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="burst" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="priority" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="color" type="color"></td>
+                        </tr>
+                        <tr>
+                            <td><input class="col-11" data-input="process" type="text" value="P3"></td>
+                            <td><input class="col-11" data-input="arrival" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="burst" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="priority" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="color" type="color"></td>
+                        </tr>
+                        <!-- <tr>
+                            <td><input class="col-11" data-input="process" type="text" value="P4"></td>
+                            <td><input class="col-11" data-input="arrival" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="burst" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="priority" type="number" min="0" value="0"></td>
+                            <td><input class="col-11" data-input="color" type="color"></td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="contain col-xs-12 col-sm-12 col-md-7 col-lg-9">
+            <div class="row gantt">
+                
+            </div>
+            <div class="row detail">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="./FindScheduling.js"></script>
+    <script>
+        $('#addBtn').click(function () {
+
+            let html = '<tr>\
+                        <td><input class="col-11" data-input="process" type="text" value="P'+ (parseInt($('#processTable').find('tbody').find('tr').length) + 1) + '"></td>\
+                        <td><input class="col-11" data-input="arrival" type="number" min="0" value="0"></td>\
+                        <td><input class="col-11" data-input="burst" type="number" min="0" value="0"></td>\
+                        <td><input class="col-11" data-input="priority" type="number" min="0" value="0"></td>\
+                        <td><input class="col-11" data-input="color" type="color"></td>\
+                    </tr>'
+            $('#processTable').find('tbody').append(html)
+        })
+
+        $("#startBtn").click(function () {
+            let data = getData()
+            $('.gantt').html('<div class="col-12 card gantt-wrap"></div>')
+            $('.detail').html('')
+            let selc = $('#algoSelect').val()
+            if(selc == 1){
+                displayFCFS(data)
+                displayNonPremSJF(data)
+                displayPremSJF(data)
+            }else if(selc == 2){
+                displayFCFS(data)
+            }else if(selc == 3){
+                displayNonPremSJF(data)
+            }else if(selc == 4){
+                displayPremSJF(data)
+            }
+        })
+
+        function findWidth(data) {
+            let result = []
+            let base = data.time
+            data.step.forEach(element => {
+                element = element.process
+                let width = (element.completeTime - element.startTime) / base * 100
+                let obj = {
+                    process: element.process,
+                    color: element.color,
+                    startTime: element.startTime,
+                    completeTime: element.completeTime,
+                    percentWidth: width
+                }
+                result.push(obj)
+            });
+            return result
+        }
+
+        function getData() {
+            let data = []
+            $.grep($('#processTable').find('tbody').find('tr'), function (item) {
+                let obj = {
+                    process: $($(item).find("[data-input='process']")).val(),
+                    arrivalTime: parseInt($($(item).find("[data-input='arrival']")).val()),
+                    burstTime: parseInt($($(item).find("[data-input='burst']")).val()),
+                    priority: parseInt($($(item).find("[data-input='priority']")).val()),
+                    color: $($(item).find("[data-input='color']")).val()
+                }
+                data.push(obj)
+            })
+
+            return data
+        }
+
+        function displayFCFS(data) {
+            let result = FCFS(data)
+            let FCFSWidth = findWidth(result)
+            displayGantt(FCFSWidth, "FCFS")
+            displayDetail(result,"FCFS")
+        }
+
+        function displayNonPremSJF(data) {
+            let result = NonPreemSJF(data)
+            let Width = findWidth(result)
+            displayGantt(Width, "Non-preem SJF")
+            displayDetail(result,"Non-preem SJF")
+        }
+        function displayPremSJF(data) {
+            let result = PreemSJF(data)
+            console.log(result)
+            let Width = findWidth(result)
+            displayGantt(Width, "Preem SJF")
+            displayDetail(result,"Preem SJF")
+        }
+
+        function displayGantt(data, title) {
+            let body = $('.gantt-wrap')
+            let i = true
+            let html = ""
+            html += title
+            html += '<ul class="gantt">'
+            data.forEach(element => {
+
+                html += '<li style="width:' + element.percentWidth + '%;background-color:' + element.color + '">'
+                if (i) {
+                    html += '<span style="float: left;">' + element.startTime + '</span>'
+                    i = false
+                }
+                html += '<span>' + element.process + '</span>'
+                html += '<span style="float: right;">' + element.completeTime + '</span>'
+                html += '</li>'
+            })
+            html += '</ul>'
+            body.append(html)
+        }
+
+        function displayDetail(data, title) {
+            let html = '<div class="col-sm-12 col-md-12 col-lg-4 card">'
+            html += title
+            html += '<table class="tableDetail">'
+            html += '<thead>'
+            html += '<tr>'
+            html += '<th>Process</th>'
+            html += '<th>Waiting Time</th>'
+            html += '<th>Turnaround Time</th>'
+            html += '</tr>'
+            html += '</thead>'
+            html += '<tbody>'
+
+            data.process.forEach(element => {
+                html += '<tr>'
+                html += '<td>'+element.process+'</td>'
+                html += '<td>'+element.waitTime+'</td>'
+                html += '<td>'+element.turnaroundTime+'</td>'
+                html += '</tr>'
+            })
+
+            html += '<tr>'
+            html += '<td>Average</td>'
+            html += '<td>'+data.averageWaitTime+'</td>'
+            html += '<td>'+data.averageTurnaroundTime+'</td>'
+            html += '</tr>'
+
+            html += '</tbody>'
+            html += '</table>'
+            html += '</div>'
+
+            $('.detail').append(html)
+        }
+
+
+    </script>
+</body>
+
+</html>
